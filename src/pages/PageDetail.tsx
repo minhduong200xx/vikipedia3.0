@@ -3,8 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import pageApi from "../api/pageApi";
 import { useTranslation } from "react-i18next";
 
-const Home: React.FC = () => {
-  const home = "Trang_Chính";
+const PageDetail: React.FC = () => {
+  const { key } = useParams();
   const [data, setData] = useState<string>("");
   const [anchor, setAnchor] = useState<
     {
@@ -13,25 +13,17 @@ const Home: React.FC = () => {
       title: string;
     }[]
   >();
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation(["home", "layout"]);
   useEffect(() => {
     async function get() {
-      if (home) {
-        const content = await pageApi.getHtmlPage(t("lang"), home);
+      if (key) {
+        const content = await pageApi.getHtmlPage(t("lang"), key);
         setData(content);
         const baseElement = document.querySelector("base");
         if (baseElement) {
           baseElement.removeAttribute("href");
-          baseElement.setAttribute("href", "/page/");
         }
         const h2List = document.querySelectorAll("h2");
-        const viki = document.getElementsByTagName("h1");
-        const vikiArray = Array.from(viki);
-        vikiArray.forEach((element) => element.remove());
-        const header = document.getElementsByClassName("main-header__left");
-        const dl = Array.from(header);
-        dl.forEach((element) => element.remove());
-        console.log(viki);
         const anchor = Array.from(h2List).map((item, index) => {
           const id = item.id;
           const innerText = item.innerText;
@@ -41,7 +33,7 @@ const Home: React.FC = () => {
       }
     }
     get();
-  }, [data]);
+  }, [data, key, t]);
 
   return (
     <div
@@ -50,13 +42,18 @@ const Home: React.FC = () => {
         flexDirection: "row",
         justifyContent: "space-between",
         gap: 70,
-        width: "60%",
-        marginLeft: "auto",
-        marginRight: "auto",
       }}
     >
+      <ul style={{}}>
+        <b>{t("category", { ns: "home" })}</b>
+        {anchor?.map((item) => (
+          <li>
+            <a href={item.href}>{item.title}</a>
+          </li>
+        ))}
+      </ul>
       <div dangerouslySetInnerHTML={{ __html: data }} style={{}} />
     </div>
   );
 };
-export default Home;
+export default PageDetail;

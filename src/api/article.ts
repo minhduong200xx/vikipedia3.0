@@ -2,7 +2,7 @@
 import axios from "axios";
 import Article from "../models/article";
 const headers = {};
-function fetchMedia(language, title) {
+function fetchMedia(language: string, title) {
   const api = `https://vi.wikipedia.org/api/rest_v1/page/media-list/${encodeURIComponent(
     title
   )}`;
