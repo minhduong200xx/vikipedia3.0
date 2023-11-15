@@ -16,7 +16,7 @@ export const SearchBar: React.FC = () => {
   const onChange = (value: string) => {
     setSearch(value);
   };
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const searchDebounce = useDebounce(search, 1000);
   useEffect(() => {
     async function fetch() {
@@ -32,7 +32,7 @@ export const SearchBar: React.FC = () => {
     fetch();
   }, [searchDebounce]);
   const onSearch = (value: string) => {
-    navigate(`/pages/${value}`);
+    navigate(`/page/${value}`);
   };
 
   const content =

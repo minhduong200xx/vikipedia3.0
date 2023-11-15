@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import pageApi from "../api/pageApi";
 import { useTranslation } from "react-i18next";
 
@@ -13,11 +13,14 @@ const PageDetail: React.FC = () => {
       title: string;
     }[]
   >();
-  const { t, i18n } = useTranslation(["home", "layout"]);
+  const { t } = useTranslation(["home", "layout"]);
   useEffect(() => {
     async function get() {
       if (key) {
-        const content = await pageApi.getHtmlPage(t("lang"), key);
+        const content = await pageApi.getHtmlPage(
+          t("lang", { ns: "layout" }),
+          key
+        );
         setData(content);
         const baseElement = document.querySelector("base");
         if (baseElement) {

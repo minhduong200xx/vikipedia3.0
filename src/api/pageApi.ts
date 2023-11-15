@@ -8,14 +8,14 @@ const config = {
       "MediaWiki REST API docs examples/0.1 (https://www.mediawiki.org/wiki/API_talk:REST_API)",
   },
 };
-function createPage(language: string, data: any) {
-  const endpoint = `https://en.wikipedia.org/w/rest.php/v1/page`;
-  const config = {
-    "Content-Type": "application/json",
-    Authorization: "Bearer $TOKEN",
-  };
-  return axios.post(endpoint, data, config).then((response) => response);
-}
+// function createPage(language: string, data: any) {
+//   const endpoint = `https://en.wikipedia.org/w/rest.php/v1/page`;
+//   const config = {
+//     "Content-Type": "application/json",
+//     Authorization: "Bearer $TOKEN",
+//   };
+//   return axios.post(endpoint, data, config).then((response) => response);
+// }
 function fetchFeed(language: string) {
   const today = new Date();
   const year = today.getUTCFullYear();
@@ -28,17 +28,17 @@ function fetchFeed(language: string) {
     .then((response) => response.data)
     .catch((error) => console.error(error));
 }
-function updatePage(language: string, data: any) {
-  const endpoint = `https://en.wikipedia.org/w/rest.php/v1/page/Wikipedia:Sandbox`;
-  const config = {
-    "Content-Type": "application/json",
-    Authorization: "Bearer $TOKEN",
-  };
-  return axios
-    .put(endpoint, data, config)
-    .then((response) => response.data)
-    .catch((error) => console.log(error));
-}
+// function updatePage(language: string, data: any) {
+//   const endpoint = `https://en.wikipedia.org/w/rest.php/v1/page/Wikipedia:Sandbox`;
+//   const config = {
+//     "Content-Type": "application/json",
+//     Authorization: "Bearer $TOKEN",
+//   };
+//   return axios
+//     .put(endpoint, data, config)
+//     .then((response) => response.data)
+//     .catch((error) => console.log(error));
+// }
 function editSource(language: string, title: string) {
   const endpoint = `https://${language}.wikipedia.org/w/rest.php/v1/page/${title}`;
   return axios
@@ -77,11 +77,11 @@ function getFileOnPage(language: string, title: string) {
 }
 export default {
   fetchFeed,
-  createPage,
+  // createPage,
   getFileOnPage,
   getHtmlPage,
   getLangForPage,
   editSource,
-  updatePage,
+  // updatePage,
   getPageTitle,
 };
